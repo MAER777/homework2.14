@@ -30,7 +30,7 @@ public class IntegerListImpl implements IntegerList {
     public Integer add(int index, Integer item) {
         checkBound(index);
         if (stringSize == strings.length) {
-            resize(stringSize + 1);
+            grow();
         }
         for (int i = stringSize; i > index; i--) {
             strings[i] = strings[i-1];
@@ -38,6 +38,12 @@ public class IntegerListImpl implements IntegerList {
         strings[index] = item;
         stringSize++;
         return item;
+    }
+
+    private void grow() {
+        Integer[] data = new Integer[(int) (this.strings.length * 1.5)];
+        System.arraycopy(this.strings, 0, data, 0, this.strings.length);
+        this.strings = data;
     }
 
     @Override
